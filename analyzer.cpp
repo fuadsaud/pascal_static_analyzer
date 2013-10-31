@@ -41,7 +41,7 @@ void display_results() {
 
     std::map<std::string, std::vector<int> >::iterator read;
 
-    std::cout << "reads:" << std::endl;
+    std::cout << "reads (sadly not implemented yet :( ):" << std::endl;
     for (read = reads.begin(); read != reads.end(); ++read) {
         std::cout << "\t" << read->first << std::endl;
 
