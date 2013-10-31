@@ -15,6 +15,16 @@
  * beginnings of a separate compilation facility
  */
 
+ /*
+  *
+  *
+  *
+  * THIS GRAMMAR/LEXER DOES NOT RECOGNIZE COMMENTS. BUT YOU PROBABLY DON'T
+  * NEED THEM ANYWAY :)
+  *
+  *
+  */
+
 #include "analyzer.h"
 
 extern int line_no;
@@ -258,7 +268,7 @@ variable_declaration_list :
  ;
 
 variable_declaration : identifier_list COLON type_denoter
-                     { variable_declaration($1, $3); }
+                     { variable_declaration($1, line_no); }
  ;
 
 procedure_and_function_declaration_part :
@@ -406,6 +416,7 @@ variable_access : identifier
  | indexed_variable
  | field_designator
  | variable_access UPARROW
+                { read($1, line_no); }
  ;
 
 indexed_variable : variable_access LBRAC index_expression_list RBRAC

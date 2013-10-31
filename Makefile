@@ -1,5 +1,5 @@
 CC         = clang
-CFLAGS     = -x c++ -stdc++
+CFLAGS     = -x c++ -l stdc++
 LEX        = flex
 LEX_FLAGS  = -l
 YACC       = bison
@@ -19,6 +19,6 @@ lexer:
 parser: lexer
 	$(YACC) $(YACC_FLAGS) $(PARSER_DEF) -o $(PARSER)
 compile: parser
-	$(CC) $(CFLAGS) *.c -o $(OUT)
+	$(CC) $(CFLAGS) *.c *.cpp -o $(OUT)
 clean:
 	rm $(OUT) $(LEXER) $(LEXER_H) $(PARSER) $(PARSER_H)
