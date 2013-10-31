@@ -1,0 +1,5 @@
+pascal.tab.*
+*2*
+
+pascal
+lex.yy.c
