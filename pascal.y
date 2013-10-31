@@ -587,5 +587,9 @@ void yyerror(char *s) { fprintf(stderr,"ERROR: %s\n",s); }
 extern FILE *yyin;
 
 int main () {
-  do { yyparse(); } while (!feof(yyin)); return 0;
+  do { yyparse(); } while (!feof(yyin));
+
+  display_results();
+
+  return 0;
 }

@@ -1,5 +1,5 @@
 CC         = clang
-CFLAGS     = -x c++ -l stdc++
+CFLAGS     = -x c++ -l stdc++ -w
 LEX        = flex
 LEX_FLAGS  = -l
 YACC       = bison
