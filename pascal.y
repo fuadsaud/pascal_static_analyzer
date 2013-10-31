@@ -17,6 +17,10 @@
 
 #include "analyzer.h"
 
+extern int line_no;
+extern void yyerror(char *s);
+extern int yylex();
+
 %}
 
 %union {
@@ -37,6 +41,7 @@
 %type <sval> identifier_list
 %type <sval> COLON
 %type <sval> type_denoter
+%type <sval> variable_access
 
 %%
 file : program
@@ -394,6 +399,7 @@ closed_if_statement : IF boolean_expression THEN closed_statement
  ;
 
 assignment_statement : variable_access ASSIGNMENT expression
+                     { assignment($1, line_no); }
  ;
 
 variable_access : identifier
@@ -565,8 +571,7 @@ comma : COMMA
 
 #include <stdio.h>
 
-
-int yyerror(char *s) { fprintf(stderr,"ERROR: %s\n",s); return 0; }
+void yyerror(char *s) { fprintf(stderr,"ERROR: %s\n",s); }
 
 extern FILE *yyin;
 

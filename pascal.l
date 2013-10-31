@@ -11,8 +11,8 @@
 #include "pascal.tab.h"
 
 int line_no = 1;
-int commenteof();
 
+extern int yyerror(char* message);
 %}
 
 A [aA]
@@ -113,42 +113,19 @@ NQUOTE [^']
 "->"   |
 "^"               return(UPARROW);
 
-"(*"   |
-"{"    { register int c;
-     while ((c = input()))
-     {
-      if (c == '}')
-       break;
-      else if (c == '*')
-      {
-       if ((c = input()) == ')')
-        break;
-       else
-        unput (c);
-      }
-      else if (c == '\n')
-       line_no++;
-      else if (c == 0){
-       commenteof();
-      }
-     }
-    }
-
+"(*"[^"*)"]"*)"  |
+"{"[^"}"]"}"  ;
 [ \t\f]    ;
 
 \n    line_no++;
 
-.    { fprintf (stderr,
-    "'%c' (0%o): illegal charcter at line %d\n",
-     yytext[0], yytext[0], line_no);
-    }
+.    {
+         fprintf (stderr,
+                  "'%c' (0%o): illegal charcter at line %d\n",
+                  yytext[0], yytext[0], line_no);
+     }
 
 %%
-
-int commenteof() {
- fprintf (stderr, "unexpected EOF inside comment at line %d\n", line_no);
- exit (1);
-}
 
 int yywrap () { return (1); }
 
